@@ -1,49 +1,65 @@
 body {
-  background: #ccc;
-  min-width: 600px;
+  margin: 0;
+  padding: 0;
+  background: #388E8E;
 }
 #base {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: #4d4d4d;
+  height: 325px;
+  width:325px;
+  padding:11px;
+  border-radius: 50%;
+  padding: 1px solid #fff;
 }
-#panel {
+.panel {
   position: absolute;
   margin: auto;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background: #EAEAEA;
-  border-radius: 0.8rem;
-  border: 1px #ccc solid;
-  height: 5rem;
-  width: 10rem;
 }
-#circle {
-
+#front-panel {
+  background: #dcdcdc;
+  border-radius: 50%;
+  height: 145px;
+  width: 145px;
+  font-family: 'Quantico', sans-serif;
+  color: #4d4d4d;
+  font-size: 23px;
+  text-align: center;
+  padding: 20px;
+}
+#back-panel {
+  background: #4d4d4d;
+  border-radius: 50%;
+  height: 210px;
+  width: 210px;
 }
 .quarter-circle {
-  height: 9rem;
-  width: 9rem;
+  height: 160px;
+  width: 160px;
   display: inline-block;
-  border: 1px #ccc solid;
 }
 #green {
   background: #008B00;
-  border-radius: 10rem 0 0 0;
+  border-radius: 160px 0 0 0;
 }
 #red {
   background: #DC143C;
-  border-radius: 0 10rem 0 0;
+  border-radius: 0 160px 0 0;
 }
 #yellow {
   background: #EEEE00;
-  border-radius: 0 0 0 10rem;
+  border-radius: 0 0 0 160px;
 }
 #blue {
   background: #4169E1;
-  border-radius: 0 0 10rem 0;
+  border-radius: 0 0 160px 0;
 }
