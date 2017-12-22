@@ -48,6 +48,7 @@ body {
 #input-display {
   display: inline-block;
   background: #B4CDCD;
+  border-radius: 7px;
   border: 1px solid #dcdcdc;
   height: 40px;
   width: 55px;
@@ -55,7 +56,7 @@ body {
   font-family: 'Coda', cursive;
   font-size: 30px;
   color: #424242;
-  margin-right: 5px;
+  margin-right: 3px;
   margin-top: 2px;
 }
 .control-button {
@@ -69,12 +70,12 @@ body {
   display: inline-block;
   margin-top: -9px;
   text-align: center;
-  vertical-align: center;
   line-height: 25px;
+  cursor: pointer;
 }
 #start-game {
   background: #DC143C;
-  margin-right: 5px;
+  margin-right: 3px;
   padding: 2px;
 }
 #strict-mode {
@@ -101,4 +102,30 @@ body {
 #blue {
   background: #4169E1;
   border-radius: 0 0 160px 0;
+}
+#bottom-panel {
+  padding-top: 15px;
+}
+.on-off {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  margin-right: 0;
+  margin-top: -15px;
+}
+#switch {
+  background: #696969;
+  border-radius: 3px;
+  border: 1px solid #666;
+  height: 20px;
+  width: 60px;
+  padding: 3px 2px 2px 3px;
+  display: inline-block;
+}
+#switch-runner {
+  background: #ADD8E6;
+  border-radius: 3px;
+  border: 1px solid #666;
+  height: 18px;
+  width: 25px;
 }
