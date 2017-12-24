@@ -1,12 +1,14 @@
 $(document).ready(() => {
   const blocks = ['green', 'red', 'blue', 'yellow'];
-  let succession = ['red'];
+  let succession = [];
   let round = 0;
   let gameIsAvailable = true;
   let strictMode = false;
 
   $('#start-game').on('click', e => {
+    makeClicks();
     if (gameIsAvailable){
+      $('#input-display').text('01');
       $('.quarter-circle').on('click', e => {
         clickOnBlock(e.target.id);
       });
@@ -20,32 +22,35 @@ $(document).ready(() => {
       round++;
     } else {
       round = 0;
-      setTimeout(makeClicks, 2000);
+      playAndNext();
     }
 
     if (succession.length == round){
       round = 0;
-      setTimeout(() => makeClicks(true), 2000);
+      playAndNext(true);
     }
   }
 
 
   // main
   let makeClicks = (step=false) => {
-    if (succession.length == 0){
-      addNewBlock();
-    }
-    index = 0;
-    let interval = setInterval(()=> {
-      flashClickedBlock(succession[index]);
-      index++;
-      if (index == succession.length){
-        clearInterval(interval);
+    return new Promise((resolve, reject) => {
+      if (succession.length == 0){
+        addNewBlock();
       }
-    }, 1000)
-    if (step){
-      addNewBlock();
-    }
+      index = 0;
+      let interval = setInterval(()=> {
+        flashClickedBlock(succession[index]);
+        index++;
+        if (index == succession.length){
+          resolve();
+          clearInterval(interval);
+        }
+      }, 1000)
+      if (step){
+        addNewBlock();
+      }
+    });
   }
 
   // helpers
@@ -65,5 +70,15 @@ $(document).ready(() => {
   }
   let addNewBlock = () => {
     succession.push(blocks[selectRandomBlockId()]);
+  }
+  let playAndNext = (next=false) => {
+    $('.quarter-circle').off('click');
+    setTimeout(() => {
+      makeClicks(next).then(() => {
+        $('.quarter-circle').on('click', e => {
+          clickOnBlock(e.target.id);
+        });
+      });
+    }, 2000);
   }
 });
