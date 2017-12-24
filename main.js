@@ -2,20 +2,28 @@ $(document).ready(() => {
   const blocks = ['green', 'red', 'blue', 'yellow'];
   let succession = [];
   let round = 0;
-  let gameIsAvailable = true;
+  let gameIsAvailable = false;
   let strictMode = false;
 
-  $('#start-game').on('click', e => {
-    makeClicks();
+  $('#switch-runner').on('click', () => {
     if (gameIsAvailable){
-      $('#input-display').text('01');
+      $('#switch-runner').animate({"margin-left":'0'});
+      gameIsAvailable = false;
+    } else {
+      $('#switch-runner').animate({"margin-left":'32px'});
+      gameIsAvailable = true;
+    }
+  });
+  $('#start-game').on('click', e => {
+    if (gameIsAvailable){
+      makeClicks();
+      $('#input-display').text('00');
       $('.quarter-circle').on('click', e => {
         clickOnBlock(e.target.id);
       });
     }
   });
 
-  // callbacks
   let clickOnBlock = block => {
     flashClickedBlock(block);
     if (block == succession[round]){
@@ -26,6 +34,7 @@ $(document).ready(() => {
     }
 
     if (succession.length == round){
+      $('#input-display').text(getScores());
       round = 0;
       playAndNext(true);
     }
@@ -52,8 +61,6 @@ $(document).ready(() => {
       }
     });
   }
-
-  // helpers
   let flashClickedBlock = (block) => {
     $('#'+block).css('opacity', '0.6');
     let counter = 0;
@@ -80,5 +87,13 @@ $(document).ready(() => {
         });
       });
     }, 2000);
+  }
+  let getScores = () => {
+    let current = parseInt($('#input-display').text());
+    let nextScore = current + 1;
+    if (nextScore < 10){
+      nextScore = '0' + nextScore;
+    }
+    return nextScore;
   }
 });
