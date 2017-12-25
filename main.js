@@ -8,18 +8,19 @@ $(document).ready(() => {
   $('#switch-runner').on('click', () => {
     if (gameIsAvailable){
       $('#switch-runner').animate({"margin-left":'0'});
-      gameIsAvailable = false;
+      resetAll();
     } else {
-      $('#switch-runner').animate({"margin-left":'32px'});
+      $('#switch-runner').animate({'margin-left':'32px'});
       gameIsAvailable = true;
-    }
-  });
-  $('#start-game').on('click', e => {
-    if (gameIsAvailable){
-      makeClicks();
-      $('#input-display').text('00');
-      $('.quarter-circle').on('click', e => {
-        clickOnBlock(e.target.id);
+      $('#start-game').on('click', e => {
+        if (gameIsAvailable){
+          makeClicks();
+          $('#input-display').text('00');
+          $('.quarter-circle').on('click', e => {
+            clickOnBlock(e.target.id);
+          });
+        }
+        $('#start-game').off('click');
       });
     }
   });
@@ -49,16 +50,24 @@ $(document).ready(() => {
       }
       index = 0;
       let interval = setInterval(()=> {
-        flashClickedBlock(succession[index]);
-        index++;
-        if (index == succession.length){
-          resolve();
+        if (gameIsAvailable){
+          flashClickedBlock(succession[index]);
+          index++;
+          if (index == succession.length){
+            resolve();
+            clearInterval(interval);
+          }
+        } else {
+          resetAll();
           clearInterval(interval);
+          return;
         }
       }, 1000)
       if (step){
         addNewBlock();
+        console.log('step true')
       }
+      console.log('array', succession);
     });
   }
   let flashClickedBlock = (block) => {
@@ -89,11 +98,18 @@ $(document).ready(() => {
     }, 2000);
   }
   let getScores = () => {
-    let current = parseInt($('#input-display').text());
-    let nextScore = current + 1;
+    let nextScore = round;
     if (nextScore < 10){
       nextScore = '0' + nextScore;
     }
     return nextScore;
+  }
+  let resetAll = () => {
+    $('.quarter-circle').off('click');
+    gameIsAvailable = false;
+    round = 0;
+    succession = [];
+    $('#input-display').text('--');
+    $('#start-game').off('click');
   }
 });
