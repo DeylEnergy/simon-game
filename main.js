@@ -9,19 +9,20 @@ $(document).ready(() => {
     if (gameIsAvailable){
       $('#switch-runner').animate({"margin-left":'0'});
       resetAll();
+      gameIsAvailable = false;
     } else {
       $('#switch-runner').animate({'margin-left':'32px'});
       gameIsAvailable = true;
-      $('#start-game').on('click', e => {
-        if (gameIsAvailable){
-          makeClicks();
-          $('#input-display').text('00');
-          $('.quarter-circle').on('click', e => {
-            clickOnBlock(e.target.id);
-          });
-        }
-        $('#start-game').off('click');
-      });
+      initGame();
+    }
+  });
+  $('#strict-mode').on('click', () => {
+    if (strictMode){
+      strictMode = false;
+      $('#strict-mode').css('border-color', '#424242');
+    } else {
+      strictMode = true;
+      $('#strict-mode').css('border-color', '#a3a3a3');
     }
   });
 
@@ -31,7 +32,17 @@ $(document).ready(() => {
       round++;
     } else {
       round = 0;
-      playAndNext();
+      if (!strictMode){
+        const message = $('#input-display').text();
+        flashError(message);
+        playAndNext();
+        console.log('not strict');
+      } else {
+        flashError('00');
+        resetAll();
+        console.log('strict')
+        //initGame();
+      }
     }
 
     if (succession.length == round){
@@ -41,8 +52,19 @@ $(document).ready(() => {
     }
   }
 
-
   // main
+  let initGame = () => {
+    $('#start-game').on('click', e => {
+      if (gameIsAvailable){
+        makeClicks();
+        $('#input-display').text('00');
+        $('.quarter-circle').on('click', e => {
+          clickOnBlock(e.target.id);
+        });
+      }
+      $('#start-game').off('click');
+    });
+  }
   let makeClicks = (step=false) => {
     return new Promise((resolve, reject) => {
       if (succession.length == 0){
@@ -65,9 +87,7 @@ $(document).ready(() => {
       }, 1000)
       if (step){
         addNewBlock();
-        console.log('step true')
       }
-      console.log('array', succession);
     });
   }
   let flashClickedBlock = (block) => {
@@ -104,9 +124,14 @@ $(document).ready(() => {
     }
     return nextScore;
   }
+  let flashError = (before) => {
+    $('#input-display').text('!!');
+    setTimeout(() => {
+      $('#input-display').text(before);
+    }, 2000);
+  }
   let resetAll = () => {
     $('.quarter-circle').off('click');
-    gameIsAvailable = false;
     round = 0;
     succession = [];
     $('#input-display').text('--');
