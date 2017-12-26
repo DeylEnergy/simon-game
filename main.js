@@ -12,19 +12,20 @@ $(document).ready(() => {
       gameIsAvailable = false;
     } else {
       $('#switch-runner').animate({'margin-left':'32px'});
+      $('#strict-mode').on('click', () => {
+        if (strictMode){
+          strictMode = false;
+          $('#strict-mode').css('border-color', '#424242');
+        } else {
+          strictMode = true;
+          $('#strict-mode').css('border-color', '#a3a3a3');
+        }
+      });
       gameIsAvailable = true;
       initGame();
     }
   });
-  $('#strict-mode').on('click', () => {
-    if (strictMode){
-      strictMode = false;
-      $('#strict-mode').css('border-color', '#424242');
-    } else {
-      strictMode = true;
-      $('#strict-mode').css('border-color', '#a3a3a3');
-    }
-  });
+
 
   let clickOnBlock = block => {
     flashClickedBlock(block);
@@ -36,12 +37,11 @@ $(document).ready(() => {
         const message = $('#input-display').text();
         flashError(message);
         playAndNext();
-        console.log('not strict');
       } else {
         flashError('00');
         resetAll();
-        console.log('strict')
-        //initGame();
+        playAndNext();
+        return;
       }
     }
 
