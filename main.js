@@ -92,6 +92,7 @@ $(document).ready(() => {
   }
   let flashClickedBlock = (block) => {
     $('#'+block).css('opacity', '0.6');
+    buttonSound(block);
     let counter = 0;
     let interval = setInterval(()=> {
       counter++;
@@ -136,5 +137,9 @@ $(document).ready(() => {
     succession = [];
     $('#input-display').text('--');
     $('#start-game').off('click');
+  }
+  let buttonSound = (button) => {
+    let element = document.getElementById(button + '-audio');
+    element.play();
   }
 });
