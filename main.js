@@ -31,6 +31,13 @@ $(document).ready(() => {
     flashClickedBlock(block);
     if (block == succession[round]){
       round++;
+      if (round == 20){
+        flashError('00');
+        resetAll();
+        alert('You won!')
+        playAndNext();
+        return;
+      }
     } else {
       round = 0;
       if (!strictMode){
