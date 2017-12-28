@@ -1,4 +1,4 @@
 # SimonGame
 
-The information will be available later.
-
+The game was created as Advanced FrotEnd Project. \
+Link - https://codepen.io/DeylRaytop/full/YYNmQZ/
